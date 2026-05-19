@@ -1,0 +1,11 @@
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\bin\Debug\net10.0\PhishingSimulator.Core.deps.json
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\bin\Debug\net10.0\PhishingSimulator.Core.dll
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\bin\Debug\net10.0\PhishingSimulator.Core.pdb
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\PhishingSimulator.Core.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\PhishingSimulator.Core.AssemblyInfoInputs.cache
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\PhishingSimulator.Core.AssemblyInfo.cs
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\PhishingSimulator.Core.csproj.CoreCompileInputs.cache
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\PhishingSimulator.Core.dll
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\refint\PhishingSimulator.Core.dll
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\PhishingSimulator.Core.pdb
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Core\obj\Debug\net10.0\ref\PhishingSimulator.Core.dll

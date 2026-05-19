@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PhishSim</title>
+    <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PhishingSimulator.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a class="nav-brand" asp-page="/Index">Phish<span>Sim</span></a>
+                <ul class="nav-links d-none d-md-flex">
+                    <li><a href="/#how-it-works">How it works</a></li>
+                    <li><a href="/#features">Features</a></li>
+                    <li><a asp-area="" asp-page="/Privacy">Privacy</a></li>
+                </ul>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="nav-actions">
+                        <a asp-page="/Dashboard/Index" class="btn-ghost-sm">Dashboard</a>
+                        <form method="post" asp-page="/Account/Logout" style="margin:0;">
+                            <button type="submit" class="btn-primary-sm">Sign out</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="nav-actions">
+                        <a asp-page="/Account/Login" class="btn-ghost-sm">Sign in</a>
+                        <a asp-page="/Account/Register" class="btn-primary-sm">Get started</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <span class="footer-brand">PhishSim</span>
+                <div class="footer-links">
+                    <a asp-area="" asp-page="/Privacy">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">GitHub</a>
+                </div>
+                <span>&copy; 2026 PhishSim</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

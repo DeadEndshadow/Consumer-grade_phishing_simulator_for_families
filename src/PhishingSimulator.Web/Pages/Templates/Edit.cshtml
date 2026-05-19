@@ -1,0 +1,111 @@
+@page "/templates/{id:guid}/edit"
+@model PhishingSimulator.Web.Pages.Templates.EditModel
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = "Edit template";
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>Edit template</h1>
+        <p class="dash-topbar-sub">Editing a custom template — built-in templates cannot be modified.</p>
+    </div>
+    <a asp-page="/Templates/Detail" asp-route-id="@Model.TemplateId" class="btn-action btn-action-outline">Cancel</a>
+</div>
+
+<div class="dash-content">
+
+    @if (Model.ErrorMessage is not null)
+    {
+        <div class="auth-error" style="margin-bottom:1.25rem;">@Model.ErrorMessage</div>
+    }
+
+    <form method="post" asp-route-id="@Model.TemplateId">
+
+        <!-- Name & lure type -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Identity</h2>
+            </div>
+            <div class="dash-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="Name">Template name</label>
+                    <input asp-for="Name" type="text" value="@Model.Name" />
+                </div>
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="LureType">Lure type</label>
+                    <input asp-for="LureType" type="text" value="@Model.LureType" list="lure-suggestions" />
+                    <datalist id="lure-suggestions">
+                        <option value="Delivery notification" />
+                        <option value="Payment / billing alert" />
+                        <option value="Security / account alert" />
+                        <option value="Prize / reward" />
+                        <option value="Job offer" />
+                        <option value="Government / authority" />
+                        <option value="IT / tech support" />
+                    </datalist>
+                </div>
+            </div>
+        </div>
+
+        <!-- Difficulty & subject -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Email header</h2>
+            </div>
+            <div class="dash-section-body" style="display:grid;grid-template-columns:160px 1fr;gap:1rem;">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="Difficulty">Difficulty</label>
+                    <select asp-for="Difficulty">
+                        <option value="Easy"   selected="@(Model.Difficulty == Difficulty.Easy   ? "selected" : null)">Easy</option>
+                        <option value="Medium" selected="@(Model.Difficulty == Difficulty.Medium ? "selected" : null)">Medium</option>
+                        <option value="Hard"   selected="@(Model.Difficulty == Difficulty.Hard   ? "selected" : null)">Hard</option>
+                    </select>
+                </div>
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="SubjectTemplate">Subject line</label>
+                    <input asp-for="SubjectTemplate" type="text" value="@Model.SubjectTemplate" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Body HTML -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Email body (HTML)</h2>
+                <span style="font-size:0.78rem;color:var(--muted);">
+                    Merge fields: <code class="tpl-merge">{first_name}</code>
+                    <code class="tpl-merge">{tracking_link}</code>
+                    <code class="tpl-merge">{opt_out_link}</code>
+                </span>
+            </div>
+            <div class="dash-section-body">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="BodyHtmlTemplate">HTML source</label>
+                    <textarea asp-for="BodyHtmlTemplate" rows="16" class="tpl-textarea">@Model.BodyHtmlTemplate</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- What to look for -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Red flags (shown on reveal page)</h2>
+            </div>
+            <div class="dash-section-body">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="WhatToLookFor">Explain what a careful reader should have noticed</label>
+                    <textarea asp-for="WhatToLookFor" rows="6" class="tpl-textarea">@Model.WhatToLookFor</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+            <a asp-page="/Templates/Detail" asp-route-id="@Model.TemplateId" class="btn-action btn-action-outline">Cancel</a>
+            <button type="submit" class="btn-action btn-action-primary">Save changes</button>
+        </div>
+
+    </form>
+</div>

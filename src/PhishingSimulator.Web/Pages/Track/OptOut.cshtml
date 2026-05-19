@@ -1,0 +1,34 @@
+@page "/track/optout/{token}"
+@model PhishingSimulator.Web.Pages.Track.OptOutModel
+@{
+    ViewData["Title"] = "Opt out of simulations";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="auth-wrap">
+    <div class="auth-card" style="max-width:460px;">
+        <div class="auth-logo">Phish<span>Sim</span></div>
+
+        @if (Model.Done || Model.AlreadyOptedOut)
+        {
+            <h1 class="auth-title" style="font-size:1.25rem;">You've been removed.</h1>
+            <p style="font-size:0.9rem;color:var(--muted);margin:0;line-height:1.7;">
+                @Model.ParticipantName, you won't receive any more phishing simulations.
+                If you change your mind, ask your family organiser to re-invite you.
+            </p>
+        }
+        else
+        {
+            <h1 class="auth-title" style="font-size:1.25rem;">Opt out of phishing simulations</h1>
+            <p style="font-size:0.9rem;color:var(--muted);margin:0 0 1.5rem;line-height:1.7;">
+                Hi <strong>@Model.ParticipantName</strong> — click below to stop receiving phishing awareness simulations.
+            </p>
+            <form method="post">
+                <button type="submit" class="btn-auth"
+                        style="background:#dc2626;" onclick="return confirm('Confirm opt-out?')">
+                    Remove me from simulations
+                </button>
+            </form>
+        }
+    </div>
+</div>

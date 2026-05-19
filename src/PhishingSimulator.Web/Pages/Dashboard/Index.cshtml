@@ -1,0 +1,134 @@
+@page "/dashboard"
+@model PhishingSimulator.Web.Pages.Dashboard.IndexModel
+@using System.Security.Claims
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+    var firstName = (User.FindFirstValue(ClaimTypes.Name) ?? "there").Split(' ')[0];
+    var resiliencePct = Model.TotalSent > 0
+        ? (Model.TotalSent - Model.TotalClicked) * 100 / Model.TotalSent
+        : (int?)null;
+    var resilienceText = resiliencePct.HasValue ? $"{resiliencePct}%" : "—";
+    var resilienceClass = resiliencePct.HasValue
+        ? (resiliencePct >= 70 ? "good" : "warn")
+        : "";
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>Good to see you, @firstName</h1>
+        <p class="dash-topbar-sub">Here's how your family is doing.</p>
+    </div>
+    <div class="quick-actions">
+        <a asp-page="/Family/Index" class="btn-action btn-action-outline">&#43;&nbsp;Add member</a>
+        <a asp-page="/Campaigns/New" class="btn-action btn-action-primary">&#43;&nbsp;New campaign</a>
+    </div>
+</div>
+
+<div class="dash-content">
+
+    <!-- Stats row -->
+    <div class="stat-cards">
+        <div class="stat-card">
+            <div class="stat-label">Family members</div>
+            <div class="stat-value">@Model.ParticipantCount</div>
+            <div class="stat-desc">People enrolled in training</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Campaigns</div>
+            <div class="stat-value">@Model.CampaignCount</div>
+            <div class="stat-desc">Simulations created</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Resilience score</div>
+            <div class="stat-value @resilienceClass">@resilienceText</div>
+            <div class="stat-desc">Emails not clicked</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Emails sent</div>
+            <div class="stat-value">@Model.TotalSent</div>
+            <div class="stat-desc">Total simulated phishes</div>
+        </div>
+    </div>
+
+    <!-- Recent campaigns -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">Recent campaigns</h2>
+            <a asp-page="/Campaigns/Index" class="dash-section-link">View all</a>
+        </div>
+
+        @if (!Model.RecentCampaigns.Any())
+        {
+            <div class="empty-state">
+                <div class="empty-state-icon">&#128233;</div>
+                <h3>No campaigns yet</h3>
+                <p>Send your first simulated phishing email to start training your family.</p>
+                <a asp-page="/Campaigns/New" class="btn-action btn-action-primary">Create your first campaign</a>
+            </div>
+        }
+        else
+        {
+            <div class="campaign-list">
+                <div class="campaign-row campaign-row-header">
+                    <span>Campaign</span>
+                    <span>Recipients</span>
+                    <span>Clicked</span>
+                    <span>Status</span>
+                </div>
+                @foreach (var campaign in Model.RecentCampaigns)
+                {
+                    var clicked = campaign.Targets.Count(t =>
+                        t.Status == TargetStatus.Clicked || t.Status == TargetStatus.Submitted);
+                    var badgeClass = campaign.Status switch
+                    {
+                        CampaignStatus.Sent      => "badge-sent",
+                        CampaignStatus.Scheduled => "badge-scheduled",
+                        CampaignStatus.Cancelled => "badge-cancelled",
+                        _                        => "badge-draft",
+                    };
+                    <div class="campaign-row">
+                        <div>
+                            <div class="campaign-name">@campaign.Name</div>
+                            <div class="campaign-date">@campaign.CreatedAt.ToString("MMM d, yyyy")</div>
+                        </div>
+                        <span>@campaign.Targets.Count</span>
+                        <span>@clicked</span>
+                        <span class="badge @badgeClass">@campaign.Status</span>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Getting started checklist (only when account is empty) -->
+    @if (Model.ParticipantCount == 0)
+    {
+        <div class="dash-section">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Get started in 3 steps</h2>
+            </div>
+            <div class="dash-section-body">
+                <div class="steps" style="margin:0;">
+                    <div class="step" style="text-align:left;padding:1.25rem;">
+                        <div class="step-number" style="width:36px;height:36px;font-size:0.9rem;margin-bottom:0.75rem;">1</div>
+                        <h3 style="font-size:0.95rem;">Add a family member</h3>
+                        <p>Enter their name and email. They'll confirm before any simulation is sent.</p>
+                    </div>
+                    <div class="step" style="text-align:left;padding:1.25rem;">
+                        <div class="step-number" style="width:36px;height:36px;font-size:0.9rem;margin-bottom:0.75rem;">2</div>
+                        <h3 style="font-size:0.95rem;">Choose a template</h3>
+                        <p>Pick from Easy, Medium, or Hard lures — fake parcels, payment alerts, and more.</p>
+                    </div>
+                    <div class="step" style="text-align:left;padding:1.25rem;">
+                        <div class="step-number" style="width:36px;height:36px;font-size:0.9rem;margin-bottom:0.75rem;">3</div>
+                        <h3 style="font-size:0.95rem;">Launch the campaign</h3>
+                        <p>Send immediately or schedule it. Track results here in real time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

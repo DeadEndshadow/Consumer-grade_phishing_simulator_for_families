@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PhishingSimulator.Core/PhishingSimulator.Core.csproj" />
+    <Project Path="src/PhishingSimulator.Infrastructure/PhishingSimulator.Infrastructure.csproj" />
+    <Project Path="src/PhishingSimulator.Web/PhishingSimulator.Web.csproj" />
+    <Project Path="src/PhishingSimulator.Worker/PhishingSimulator.Worker.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,88 @@
+@page "/consent/confirm"
+@model PhishingSimulator.Web.Pages.Consent.ConfirmModel
+@{
+    ViewData["Title"] = "Phishing awareness consent";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="auth-wrap" style="min-height:calc(100vh - 64px - 72px);">
+    <div class="auth-card" style="max-width:500px;">
+
+        <div class="auth-logo">Phish<span>Sim</span></div>
+
+        @if (Model.AlreadyOptedOut)
+        {
+            <h1 class="auth-title" style="font-size:1.25rem;">Opted out</h1>
+            <p class="auth-subtitle" style="margin-bottom:0;">
+                You've previously opted out of phishing simulations.
+                If you'd like to re-enroll, ask <strong>@Model.OrganizerName</strong> to re-invite you.
+            </p>
+        }
+        else if (Model.AlreadyConfirmed && !Model.Confirmed)
+        {
+            <h1 class="auth-title" style="font-size:1.25rem;">Already confirmed</h1>
+            <p class="auth-subtitle" style="margin-bottom:0;">
+                Hi <strong>@Model.ParticipantName</strong> — you've already given consent.
+                You may receive phishing simulations from <strong>@Model.OrganizerName</strong>.
+            </p>
+        }
+        else if (Model.Confirmed)
+        {
+            <div style="text-align:center;margin-bottom:1.5rem;">
+                <div style="font-size:3rem;">&#9989;</div>
+            </div>
+            <h1 class="auth-title" style="font-size:1.25rem;text-align:center;">You're enrolled!</h1>
+            <p style="font-size:0.9rem;color:var(--muted);text-align:center;margin:0 0 1.5rem;">
+                Thanks <strong>@Model.ParticipantName</strong> — <strong>@Model.OrganizerName</strong>
+                can now send you phishing awareness simulations.
+            </p>
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius-sm);
+                        padding:1rem;font-size:0.85rem;color:#15803d;line-height:1.6;">
+                <strong>What happens next?</strong><br />
+                You'll receive an email that looks like a real phishing attempt.
+                If you click the link inside, you'll land on a reveal page explaining
+                exactly what red flags you should have spotted — no harm done, just learning.
+            </div>
+        }
+        else
+        {
+            <!-- Pending — show consent form -->
+            <h1 class="auth-title" style="font-size:1.25rem;">
+                You've been invited to a cybersecurity exercise
+            </h1>
+            <p class="auth-subtitle">
+                <strong>@Model.OrganizerName</strong> wants to include you in a phishing awareness
+                training exercise using PhishSim.
+            </p>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+                        padding:1rem;font-size:0.875rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7;">
+                <strong style="color:var(--text);display:block;margin-bottom:0.5rem;">How it works:</strong>
+                <ol style="margin:0;padding-left:1.2rem;">
+                    <li>You'll receive one or more emails that look like real phishing attempts.</li>
+                    <li>If you click a link, you'll immediately land on a <em>reveal page</em> — there is no harm, no credential capture, nothing malicious.</li>
+                    <li>The reveal page explains what red flags you should have noticed.</li>
+                    <li>You can opt out at any time using the link in any simulation email.</li>
+                </ol>
+            </div>
+
+            <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:var(--radius-sm);
+                        padding:0.85rem 1rem;font-size:0.82rem;color:#92400e;margin-bottom:1.5rem;line-height:1.6;">
+                <strong>By clicking "I agree" you confirm:</strong> I agree to receive simulated
+                phishing emails from PhishSim as part of a family cybersecurity awareness exercise.
+                I understand these are training simulations and not real threats.
+                I can opt out at any time.
+            </div>
+
+            <form method="post">
+                <button type="submit" class="btn-auth">I agree — enroll me</button>
+            </form>
+
+            <p style="font-size:0.78rem;color:var(--muted);text-align:center;margin:1rem 0 0;line-height:1.6;">
+                Not interested? Simply ignore this email.
+                You will <strong>not</strong> be enrolled unless you click the button above.
+            </p>
+        }
+
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@page "/login"
+@model PhishingSimulator.Web.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div class="auth-logo">Phish<span>Sim</span></div>
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Sign in to your PhishSim account</p>
+
+        @if (Model.ErrorMessage is not null)
+        {
+            <div class="auth-error">@Model.ErrorMessage</div>
+        }
+
+        <form method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="form-field">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="form-field">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" />
+            </div>
+            <div class="form-check">
+                <input asp-for="RememberMe" type="checkbox" />
+                <label asp-for="RememberMe">Keep me signed in for 30&nbsp;days</label>
+            </div>
+            <button type="submit" class="btn-auth">Sign in</button>
+        </form>
+
+        <div class="auth-footer">
+            Don't have an account? <a asp-page="/Account/Register">Create one free</a>
+        </div>
+    </div>
+</div>

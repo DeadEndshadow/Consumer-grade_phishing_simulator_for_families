@@ -1,0 +1,15 @@
+C:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\bin\Debug\net10.0\PhishingSimulator.Infrastructure.deps.json
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\bin\Debug\net10.0\PhishingSimulator.Infrastructure.dll
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\bin\Debug\net10.0\PhishingSimulator.Infrastructure.pdb
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\bin\Debug\net10.0\PhishingSimulator.Core.dll
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\bin\Debug\net10.0\PhishingSimulator.Core.pdb
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\PhishingSimulator.Infrastructure.csproj.AssemblyReference.cache
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\PhishingSimulator.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\PhishingSimulator.Infrastructure.AssemblyInfoInputs.cache
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\PhishingSimulator.Infrastructure.AssemblyInfo.cs
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\PhishingSimulator.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\Phishing.019B1295.Up2Date
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\PhishingSimulator.Infrastructure.dll
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\refint\PhishingSimulator.Infrastructure.dll
+c:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\PhishingSimulator.Infrastructure.pdb
+C:\Users\NCXM\SourceCode\Consumer-grade_phishing_simulator_for_families\src\PhishingSimulator.Infrastructure\obj\Debug\net10.0\ref\PhishingSimulator.Infrastructure.dll

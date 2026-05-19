@@ -1,0 +1,120 @@
+@page "/templates/new"
+@model PhishingSimulator.Web.Pages.Templates.NewModel
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = "New template";
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>New template</h1>
+        <p class="dash-topbar-sub">Create a custom phishing lure for your family training.</p>
+    </div>
+    <a asp-page="/Templates/Index" class="btn-action btn-action-outline">Cancel</a>
+</div>
+
+<div class="dash-content">
+
+    @if (Model.ErrorMessage is not null)
+    {
+        <div class="auth-error" style="margin-bottom:1.25rem;">@Model.ErrorMessage</div>
+    }
+
+    <form method="post">
+
+        <!-- Name & lure type -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Identity</h2>
+            </div>
+            <div class="dash-section-body" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="Name">Template name</label>
+                    <input asp-for="Name" type="text" placeholder="e.g. Fake invoice from supplier" value="@Model.Name" />
+                </div>
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="LureType">Lure type</label>
+                    <input asp-for="LureType" type="text" placeholder="e.g. Invoice / billing alert"
+                           value="@Model.LureType" list="lure-suggestions" />
+                    <datalist id="lure-suggestions">
+                        <option value="Delivery notification" />
+                        <option value="Payment / billing alert" />
+                        <option value="Security / account alert" />
+                        <option value="Prize / reward" />
+                        <option value="Job offer" />
+                        <option value="Government / authority" />
+                        <option value="IT / tech support" />
+                    </datalist>
+                </div>
+            </div>
+        </div>
+
+        <!-- Difficulty & subject -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Email header</h2>
+            </div>
+            <div class="dash-section-body" style="display:grid;grid-template-columns:160px 1fr;gap:1rem;">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="Difficulty">Difficulty</label>
+                    <select asp-for="Difficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="SubjectTemplate">Subject line</label>
+                    <input asp-for="SubjectTemplate" type="text"
+                           placeholder="e.g. Invoice #8432 — payment required"
+                           value="@Model.SubjectTemplate" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Body HTML -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Email body (HTML)</h2>
+                <span style="font-size:0.78rem;color:var(--muted);">
+                    Merge fields: <code class="tpl-merge">{first_name}</code>
+                    <code class="tpl-merge">{tracking_link}</code>
+                    <code class="tpl-merge">{opt_out_link}</code>
+                </span>
+            </div>
+            <div class="dash-section-body">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="BodyHtmlTemplate" style="margin-bottom:0.5rem;">
+                        HTML source — use <code class="tpl-merge">{tracking_link}</code> for the phishing button/link
+                    </label>
+                    <textarea asp-for="BodyHtmlTemplate" rows="16" class="tpl-textarea"
+                              placeholder="<div style=&quot;font-family:Arial,sans-serif;&quot;>&#10;  <p>Dear {first_name},</p>&#10;  ...&#10;</div>">@Model.BodyHtmlTemplate</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- What to look for -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Red flags (shown on reveal page)</h2>
+            </div>
+            <div class="dash-section-body">
+                <div class="form-field" style="margin:0;">
+                    <label asp-for="WhatToLookFor">
+                        Explain what a careful reader should have noticed — numbered list works well
+                    </label>
+                    <textarea asp-for="WhatToLookFor" rows="6" class="tpl-textarea"
+                              placeholder="1. The sender domain doesn't match any real company.&#10;2. The deadline creates false urgency.&#10;...">@Model.WhatToLookFor</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+            <a asp-page="/Templates/Index" class="btn-action btn-action-outline">Cancel</a>
+            <button type="submit" class="btn-action btn-action-primary">Save template</button>
+        </div>
+
+    </form>
+</div>

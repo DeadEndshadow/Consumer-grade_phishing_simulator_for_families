@@ -1,0 +1,47 @@
+@page "/register"
+@model PhishingSimulator.Web.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Create account";
+}
+
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div class="auth-logo">Phish<span>Sim</span></div>
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-subtitle">Free to use &middot; No credit card required</p>
+
+        @if (Model.ErrorMessage is not null)
+        {
+            <div class="auth-error">@Model.ErrorMessage</div>
+        }
+
+        <form method="post">
+            <div class="form-field">
+                <label asp-for="Name">Your name</label>
+                <input asp-for="Name" type="text" placeholder="Jane Smith" autocomplete="name" />
+            </div>
+            <div class="form-field">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="form-field">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" placeholder="At least 8 characters" autocomplete="new-password" />
+            </div>
+            <div class="form-field">
+                <label asp-for="ConfirmPassword">Confirm password</label>
+                <input asp-for="ConfirmPassword" type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="new-password" />
+            </div>
+            <button type="submit" class="btn-auth" style="margin-top:0.5rem;">Create account</button>
+        </form>
+
+        <div class="auth-divider"></div>
+        <p class="auth-legal">
+            By creating an account you agree to our
+            <a asp-page="/Privacy">Privacy Policy</a>.
+        </p>
+        <div class="auth-footer">
+            Already have an account? <a asp-page="/Account/Login">Sign in</a>
+        </div>
+    </div>
+</div>

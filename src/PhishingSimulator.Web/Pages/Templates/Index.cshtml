@@ -1,0 +1,62 @@
+@page "/templates"
+@model PhishingSimulator.Web.Pages.Templates.IndexModel
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = "Templates";
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>Templates</h1>
+        <p class="dash-topbar-sub">Built-in phishing lures plus any custom templates you've created.</p>
+    </div>
+    <a asp-page="/Templates/New" class="btn-action btn-action-primary">&#43;&nbsp;New template</a>
+</div>
+
+<div class="dash-content">
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">All templates (@Model.Templates.Count)</h2>
+        </div>
+
+        @if (!Model.Templates.Any())
+        {
+            <div class="empty-state">
+                <div class="empty-state-icon">&#128203;</div>
+                <h3>No templates yet</h3>
+                <p>Create your first custom template or wait for built-in templates to load.</p>
+                <a asp-page="/Templates/New" class="btn-action btn-action-primary">Create template</a>
+            </div>
+        }
+        else
+        {
+            <div class="template-list">
+                <div class="template-row template-row-header">
+                    <span>Template</span>
+                    <span>Difficulty</span>
+                    <span>Type</span>
+                </div>
+                @foreach (var t in Model.Templates)
+                {
+                    var diffClass = t.Difficulty switch
+                    {
+                        Difficulty.Easy   => "diff-easy",
+                        Difficulty.Medium => "diff-medium",
+                        _                 => "diff-hard",
+                    };
+                    <a asp-page="/Templates/Detail" asp-route-id="@t.Id" class="template-row template-row-link">
+                        <div>
+                            <div class="template-name-main">@t.Name</div>
+                            <div class="template-subject">@t.LureType &mdash; @t.SubjectTemplate</div>
+                        </div>
+                        <span class="template-card-diff @diffClass">@t.Difficulty</span>
+                        <span class="badge @(t.IsBuiltIn ? "badge-scheduled" : "badge-draft")">
+                            @(t.IsBuiltIn ? "Built-in" : "Custom")
+                        </span>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</div>

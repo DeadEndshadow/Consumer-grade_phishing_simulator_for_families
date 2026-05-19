@@ -1,0 +1,69 @@
+@page "/reveal/{token}"
+@model PhishingSimulator.Web.Pages.Reveal.IndexModel
+@{
+    ViewData["Title"] = "That was a phishing simulation!";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+    var template = Model.Target.Campaign.Template;
+    var firstName = Model.Target.Participant.Name.Split(' ')[0];
+}
+
+<div style="background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 55%,#0f172a 100%);
+            padding:3rem 1rem 2.5rem;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:relative;max-width:640px;margin:0 auto;">
+        <div style="font-size:3.5rem;margin-bottom:0.75rem;">&#127916;</div>
+        <h1 style="font-size:clamp(1.6rem,5vw,2.4rem);font-weight:800;color:#fff;
+                   letter-spacing:-0.03em;margin:0 0 0.75rem;line-height:1.1;">
+            @firstName, that was a phishing simulation.
+        </h1>
+        <p style="font-size:1rem;color:rgba(255,255,255,0.65);margin:0;line-height:1.7;">
+            Don't worry — nothing was stolen, no credentials were captured, and this is completely safe.
+            <br />You just helped yourself get better at spotting scams.
+        </p>
+    </div>
+</div>
+
+<div style="max-width:680px;margin:0 auto;padding:2.5rem 1.25rem 4rem;">
+
+    <!-- What happened -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1.75rem;margin-bottom:1.5rem;">
+        <h2 style="font-size:1rem;font-weight:700;letter-spacing:-0.01em;margin:0 0 0.75rem;color:#0f172a;">
+            &#128269; What happened
+        </h2>
+        <p style="font-size:0.9rem;color:#475569;margin:0 0 0.75rem;line-height:1.75;">
+            You received a simulated phishing email:
+        </p>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;
+                    font-size:0.85rem;color:#64748b;">
+            <div style="margin-bottom:0.35rem;">
+                <strong style="color:#0f172a;">Subject:</strong> @template.SubjectTemplate
+            </div>
+            <div><strong style="color:#0f172a;">Lure type:</strong> @template.LureType</div>
+        </div>
+    </div>
+
+    <!-- Red flags -->
+    <div style="background:#fff;border:2px solid #6366f1;border-radius:12px;padding:1.75rem;margin-bottom:1.5rem;">
+        <h2 style="font-size:1rem;font-weight:700;letter-spacing:-0.01em;margin:0 0 1rem;color:#4f46e5;">
+            &#128680; What you should have spotted
+        </h2>
+        <div style="font-size:0.9rem;color:#475569;line-height:1.85;white-space:pre-line;">@template.WhatToLookFor</div>
+    </div>
+
+    <!-- Tips -->
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:1.75rem;margin-bottom:2rem;">
+        <h2 style="font-size:1rem;font-weight:700;letter-spacing:-0.01em;margin:0 0 0.75rem;color:#15803d;">
+            &#9989; How to protect yourself next time
+        </h2>
+        <ul style="font-size:0.875rem;color:#166534;line-height:1.85;margin:0;padding-left:1.25rem;">
+            <li>Check the sender's email address — hover to see the real domain.</li>
+            <li>Be suspicious of urgency or pressure ("act in 24 hours").</li>
+            <li>Go directly to the company's website instead of clicking links in emails.</li>
+            <li>When in doubt, call the company on their official number.</li>
+        </ul>
+    </div>
+
+    <p style="text-align:center;font-size:0.85rem;color:#94a3b8;">
+        This simulation was organised by your family as a cybersecurity awareness exercise using PhishSim.
+    </p>
+
+</div>

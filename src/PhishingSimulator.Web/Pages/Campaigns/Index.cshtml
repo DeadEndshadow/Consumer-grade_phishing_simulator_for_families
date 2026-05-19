@@ -1,0 +1,67 @@
+@page "/campaigns"
+@model PhishingSimulator.Web.Pages.Campaigns.IndexModel
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = "Campaigns";
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>Campaigns</h1>
+        <p class="dash-topbar-sub">All your phishing simulations in one place.</p>
+    </div>
+    <a asp-page="/Campaigns/New" class="btn-action btn-action-primary">&#43;&nbsp;New campaign</a>
+</div>
+
+<div class="dash-content">
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">All campaigns (@Model.Campaigns.Count)</h2>
+        </div>
+
+        @if (!Model.Campaigns.Any())
+        {
+            <div class="empty-state">
+                <div class="empty-state-icon">&#128233;</div>
+                <h3>No campaigns yet</h3>
+                <p>Create your first campaign to start training your family.</p>
+                <a asp-page="/Campaigns/New" class="btn-action btn-action-primary">Create campaign</a>
+            </div>
+        }
+        else
+        {
+            <div class="campaign-list">
+                <div class="campaign-row campaign-row-header">
+                    <span>Campaign</span>
+                    <span>Template</span>
+                    <span style="text-align:center;">Recipients</span>
+                    <span style="text-align:center;">Clicked</span>
+                    <span>Status</span>
+                </div>
+                @foreach (var c in Model.Campaigns)
+                {
+                    var clicked = c.Targets.Count(t =>
+                        t.Status == TargetStatus.Clicked || t.Status == TargetStatus.Submitted);
+                    var badgeClass = c.Status switch
+                    {
+                        CampaignStatus.Sent      => "badge-sent",
+                        CampaignStatus.Scheduled => "badge-scheduled",
+                        CampaignStatus.Cancelled => "badge-cancelled",
+                        _                        => "badge-draft",
+                    };
+                    <a asp-page="/Campaigns/Detail" asp-route-id="@c.Id" class="campaign-row campaign-row-link">
+                        <div>
+                            <div class="campaign-name">@c.Name</div>
+                            <div class="campaign-date">@c.CreatedAt.ToString("MMM d, yyyy")</div>
+                        </div>
+                        <span class="td-muted">@c.Template.Name</span>
+                        <span style="text-align:center;">@c.Targets.Count</span>
+                        <span style="text-align:center;">@clicked</span>
+                        <span class="badge @badgeClass">@c.Status</span>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,112 @@
+@page "/family"
+@model PhishingSimulator.Web.Pages.Family.IndexModel
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = "Family";
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>Family members</h1>
+        <p class="dash-topbar-sub">People enrolled in your phishing training programme.</p>
+    </div>
+</div>
+
+<div class="dash-content">
+
+    @if (Model.SuccessMessage is not null)
+    {
+        <div class="alert-success">@Model.SuccessMessage</div>
+    }
+
+    <!-- Add member -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">Add a family member</h2>
+        </div>
+        <div class="dash-section-body">
+            @if (Model.ErrorMessage is not null)
+            {
+                <div class="auth-error" style="margin-bottom:1rem;">@Model.ErrorMessage</div>
+            }
+            <form method="post" asp-page-handler="Add" class="inline-form">
+                <div class="form-field" style="flex:1;min-width:160px;">
+                    <label asp-for="Name">Name</label>
+                    <input asp-for="Name" type="text" placeholder="Jane Smith" value="@Model.Name" />
+                </div>
+                <div class="form-field" style="flex:1.6;min-width:200px;">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" type="email" placeholder="jane@example.com" value="@Model.Email" />
+                </div>
+                <div class="form-field form-field-btn">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn-action btn-action-primary">Add member</button>
+                </div>
+            </form>
+            <p style="font-size:0.8rem;color:var(--muted);margin:0.5rem 0 0;">
+                They will receive a consent email before any simulation is ever sent.
+            </p>
+        </div>
+    </div>
+
+    <!-- Members list -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">Members (@Model.Participants.Count)</h2>
+        </div>
+
+        @if (!Model.Participants.Any())
+        {
+            <div class="empty-state">
+                <div class="empty-state-icon">&#128106;</div>
+                <h3>No family members yet</h3>
+                <p>Add someone above — nothing is sent until they confirm their consent.</p>
+            </div>
+        }
+        else
+        {
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Consent</th>
+                        <th>Added</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.Participants)
+                    {
+                        var consentClass = p.ConsentStatus switch
+                        {
+                            ConsentStatus.Confirmed => "badge-sent",
+                            ConsentStatus.OptedOut  => "badge-cancelled",
+                            _                       => "badge-draft",
+                        };
+                        var consentLabel = p.ConsentStatus switch
+                        {
+                            ConsentStatus.Confirmed => "Confirmed",
+                            ConsentStatus.OptedOut  => "Opted out",
+                            _                       => "Pending",
+                        };
+                        <tr>
+                            <td style="font-weight:600;">@p.Name</td>
+                            <td class="td-muted">@p.Email</td>
+                            <td><span class="badge @consentClass">@consentLabel</span></td>
+                            <td class="td-muted">@p.CreatedAt.ToString("MMM d, yyyy")</td>
+                            <td class="td-action">
+                                <form method="post" asp-page-handler="Remove" asp-route-id="@p.Id"
+                                      onsubmit="return confirm('Remove @Html.Raw(p.Name.Replace("'", "\\'")) from your family list? This cannot be undone.')">
+                                    <button type="submit" class="btn-danger-sm">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+</div>

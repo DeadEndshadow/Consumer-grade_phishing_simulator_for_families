@@ -1,0 +1,103 @@
+@page "/templates/{id:guid}"
+@model PhishingSimulator.Web.Pages.Templates.DetailModel
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = Model.Template.Name;
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+    var diffClass = Model.Template.Difficulty switch
+    {
+        Difficulty.Easy   => "diff-easy",
+        Difficulty.Medium => "diff-medium",
+        _                 => "diff-hard",
+    };
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>@Model.Template.Name</h1>
+        <div class="detail-meta" style="margin-top:0.35rem;">
+            <span class="template-card-diff @diffClass">@Model.Template.Difficulty</span>
+            <span class="badge @(Model.Template.IsBuiltIn ? "badge-scheduled" : "badge-draft")">
+                @(Model.Template.IsBuiltIn ? "Built-in" : "Custom")
+            </span>
+            <span>Lure: <strong>@Model.Template.LureType</strong></span>
+            <span>Created: <strong>@Model.Template.CreatedAt.ToString("MMM d, yyyy")</strong></span>
+        </div>
+    </div>
+    <div class="quick-actions">
+        <a asp-page="/Templates/Index" class="btn-action btn-action-outline">&#8592; Back</a>
+        @if (!Model.Template.IsBuiltIn)
+        {
+            <a asp-page="/Templates/Edit" asp-route-id="@Model.Template.Id" class="btn-action btn-action-outline">
+                Edit
+            </a>
+            <form method="post" asp-page-handler="Delete" asp-route-id="@Model.Template.Id"
+                  onsubmit="return confirm('Delete this template? Campaigns already using it will keep their reference.')">
+                <button type="submit" class="btn-action" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;">
+                    Delete
+                </button>
+            </form>
+        }
+    </div>
+</div>
+
+<div class="dash-content">
+
+    <!-- Subject & metadata -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">Email details</h2>
+        </div>
+        <div class="dash-section-body">
+            <div class="tpl-detail-row">
+                <span class="tpl-detail-label">Subject line</span>
+                <span class="tpl-detail-value">@Model.Template.SubjectTemplate</span>
+            </div>
+            <div class="tpl-detail-row">
+                <span class="tpl-detail-label">Lure type</span>
+                <span class="tpl-detail-value">@Model.Template.LureType</span>
+            </div>
+            <div class="tpl-detail-row">
+                <span class="tpl-detail-label">Difficulty</span>
+                <span class="template-card-diff @diffClass">@Model.Template.Difficulty</span>
+            </div>
+            <p style="font-size:0.8rem;color:var(--muted);margin:0.75rem 0 0;">
+                Merge fields available in subject &amp; body:
+                <code class="tpl-merge">{first_name}</code>
+                <code class="tpl-merge">{tracking_link}</code>
+                <code class="tpl-merge">{opt_out_link}</code>
+            </p>
+        </div>
+    </div>
+
+    <!-- What to look for -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">What to look for (shown after click)</h2>
+        </div>
+        <div class="dash-section-body">
+            <p style="font-size:0.9rem;color:var(--muted);line-height:1.75;margin:0;white-space:pre-line;">@Model.Template.WhatToLookFor</p>
+        </div>
+    </div>
+
+    <!-- Email HTML preview -->
+    <div class="dash-section">
+        <div class="dash-section-header">
+            <h2 class="dash-section-title">Email preview</h2>
+            <span style="font-size:0.78rem;color:var(--muted);">Rendered in a sandboxed frame — scripts disabled</span>
+        </div>
+        <div style="padding:1rem 1.5rem 1.5rem;">
+            <iframe srcdoc="@Model.Template.BodyHtmlTemplate"
+                    sandbox=""
+                    style="width:100%;height:420px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;">
+            </iframe>
+        </div>
+        <div class="dash-section-header" style="border-top:1px solid var(--border);border-bottom:none;">
+            <h2 class="dash-section-title" style="font-size:0.85rem;font-weight:600;">Raw HTML source</h2>
+        </div>
+        <div style="padding:0 1.5rem 1.5rem;">
+            <pre class="tpl-html-source">@Model.Template.BodyHtmlTemplate</pre>
+        </div>
+    </div>
+
+</div>

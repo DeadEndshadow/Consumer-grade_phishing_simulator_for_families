@@ -1,0 +1,162 @@
+@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<header class="policy-hero">
+    <div class="container">
+        <div class="policy-hero-inner">
+            <span class="hero-badge">Legal</span>
+            <h1>Privacy Policy</h1>
+            <p class="hero-sub">How PhishSim collects, uses, and protects your family's data.</p>
+            <p class="policy-updated">Last updated: May 19, 2026</p>
+        </div>
+    </div>
+</header>
+
+<main class="policy-body">
+    <div class="container">
+        <div class="policy-content">
+
+            <p class="policy-intro">
+                PhishSim helps families build real-world resilience against phishing attacks through
+                safe, consent-based email simulations. This policy explains exactly what data we
+                collect, how we use it, and what rights you have — in plain language.
+            </p>
+
+            <section class="policy-section">
+                <h2>1. What we collect</h2>
+                <ul>
+                    <li><strong>Account information</strong> — your name and email address when you register.</li>
+                    <li><strong>Family member emails</strong> — addresses you add as simulation targets, after they opt in.</li>
+                    <li><strong>Simulation results</strong> — whether a simulated email was opened, a link was clicked, or a credential page was visited. We never capture actual credentials.</li>
+                    <li><strong>Usage data</strong> — page visits, browser type, and country-level location for analytics.</li>
+                </ul>
+            </section>
+
+            <section class="policy-section policy-highlight">
+                <h2>2. What we never collect</h2>
+                <ul>
+                    <li><strong>Passwords or credentials of any kind.</strong> Our simulated login pages capture only the click event, then immediately show a safety warning. No data you type is stored.</li>
+                    <li><strong>Payment card numbers.</strong> We use Stripe for billing; we never see or store your card details.</li>
+                    <li><strong>Private communications</strong> or any data unrelated to phishing simulations.</li>
+                </ul>
+            </section>
+
+            <section class="policy-section">
+                <h2>3. How simulations work</h2>
+                <p>
+                    When you set up a campaign, PhishSim sends a realistic-looking phishing email to the
+                    family members you have added. If a recipient clicks a link, they land on a safe
+                    PhishSim-controlled page that:
+                </p>
+                <ol>
+                    <li>Displays an immediate educational message explaining the simulated attack technique.</li>
+                    <li>Records only the click event — no credentials or form input.</li>
+                    <li>Optionally notifies you so you can follow up with a conversation.</li>
+                </ol>
+                <p>
+                    No real phishing infrastructure is used. Every link resolves to our own servers,
+                    and every page is designed to teach, not to deceive beyond the initial moment of
+                    recognition.
+                </p>
+            </section>
+
+            <section class="policy-section">
+                <h2>4. Consent and opt-in</h2>
+                <p>
+                    Every family member you add receives a <strong>double opt-in email</strong> before any
+                    simulation is sent. They must confirm participation. They can withdraw consent at any
+                    time by clicking <em>Unsubscribe</em> in any simulation email or by contacting us
+                    directly. No simulation is ever sent to someone who has not confirmed.
+                </p>
+            </section>
+
+            <section class="policy-section">
+                <h2>5. Data retention</h2>
+                <ul>
+                    <li>Simulation result data is kept for <strong>12 months</strong>, then automatically deleted.</li>
+                    <li>Account and family member data is retained while your account is active.</li>
+                    <li>After account deletion, all personal data is removed within <strong>30 days</strong>.</li>
+                </ul>
+            </section>
+
+            <section class="policy-section">
+                <h2>6. Children's privacy</h2>
+                <p>
+                    PhishSim is designed for family use and may involve minors as simulation targets.
+                    We do not knowingly collect data from children under 13 without verified parental
+                    consent. The account holder — a parent or guardian — is responsible for adding
+                    family members and confirming appropriate consent exists.
+                </p>
+                <p>
+                    If you believe a child's data has been collected without proper consent, contact us
+                    and we will delete it within <strong>72 hours</strong>.
+                </p>
+            </section>
+
+            <section class="policy-section">
+                <h2>7. Your rights</h2>
+                <p>Under GDPR and similar regulations, you have the right to:</p>
+                <ul>
+                    <li><strong>Access</strong> the personal data we hold about you.</li>
+                    <li><strong>Correct</strong> inaccurate or incomplete data.</li>
+                    <li><strong>Delete</strong> your data (right to be forgotten).</li>
+                    <li><strong>Withdraw consent</strong> at any time without affecting past processing.</li>
+                    <li><strong>Port</strong> your data to another service in a machine-readable format.</li>
+                    <li><strong>Object</strong> to processing based on legitimate interests.</li>
+                </ul>
+                <p>
+                    To exercise any of these rights, email us at
+                    <a href="mailto:privacy@phishsim.app">privacy&#64;phishsim.app</a>.
+                    We will respond within 30 days.
+                </p>
+            </section>
+
+            <section class="policy-section">
+                <h2>8. Data sharing</h2>
+                <p>
+                    We do not sell your data. We share data only with:
+                </p>
+                <ul>
+                    <li><strong>Infrastructure providers</strong> (cloud hosting, transactional email delivery) under strict data processing agreements that prohibit them from using your data for their own purposes.</li>
+                    <li><strong>Stripe</strong> for payment processing — they receive billing details only and never see simulation data.</li>
+                </ul>
+                <p>We have no advertising partners and run no third-party tracking scripts.</p>
+            </section>
+
+            <section class="policy-section">
+                <h2>9. Security</h2>
+                <p>
+                    All data is encrypted in transit using TLS 1.3 and encrypted at rest using AES-256.
+                    Simulation result data is stored separately from account data with strict access
+                    controls. We conduct regular security reviews and notify affected users within
+                    72 hours of any confirmed data breach.
+                </p>
+            </section>
+
+            <section class="policy-section">
+                <h2>10. Changes to this policy</h2>
+                <p>
+                    We will notify you by email at least <strong>30 days</strong> before any material
+                    changes take effect. A summary of what changed will be included in that email.
+                    Continued use of PhishSim after the effective date constitutes acceptance of the
+                    updated policy.
+                </p>
+            </section>
+
+            <section class="policy-section policy-contact">
+                <h2>11. Contact</h2>
+                <p>
+                    Questions or concerns about this policy? We're happy to help.
+                </p>
+                <p>
+                    <strong>Email:</strong> <a href="mailto:privacy@phishsim.app">privacy&#64;phishsim.app</a><br />
+                    We aim to respond to all privacy enquiries within 2 business days.
+                </p>
+            </section>
+
+        </div>
+    </div>
+</main>

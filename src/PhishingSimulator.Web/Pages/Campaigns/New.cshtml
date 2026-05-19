@@ -1,0 +1,128 @@
+@page "/campaigns/new"
+@model PhishingSimulator.Web.Pages.Campaigns.NewModel
+@using PhishingSimulator.Core.Enums
+@{
+    ViewData["Title"] = "New campaign";
+    Layout = "~/Pages/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="dash-topbar">
+    <div>
+        <h1>New campaign</h1>
+        <p class="dash-topbar-sub">Pick a template, choose recipients, and save as a draft.</p>
+    </div>
+    <a asp-page="/Campaigns/Index" class="btn-action btn-action-outline">Cancel</a>
+</div>
+
+<div class="dash-content">
+
+    @if (Model.ErrorMessage is not null)
+    {
+        <div class="auth-error" style="margin-bottom:1.25rem;">@Model.ErrorMessage</div>
+    }
+
+    <form method="post">
+
+        <!-- Campaign name -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Campaign name</h2>
+            </div>
+            <div class="dash-section-body">
+                <div class="form-field" style="max-width:480px;margin:0;">
+                    <label asp-for="CampaignName">Give this campaign a memorable name</label>
+                    <input asp-for="CampaignName" type="text" placeholder="e.g. Christmas parcel scam test"
+                           value="@Model.CampaignName" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Template picker -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Choose a template</h2>
+            </div>
+            <div class="dash-section-body">
+                @if (!Model.Templates.Any())
+                {
+                    <p style="color:var(--muted);font-size:0.9rem;margin:0;">No templates available yet.</p>
+                }
+                else
+                {
+                    <div class="template-cards">
+                        @foreach (var t in Model.Templates)
+                        {
+                            var diffClass = t.Difficulty switch
+                            {
+                                Difficulty.Easy   => "diff-easy",
+                                Difficulty.Medium => "diff-medium",
+                                _                 => "diff-hard",
+                            };
+                            var diffLabel = t.Difficulty.ToString();
+                            <div>
+                                <input type="radio" name="TemplateId" id="tpl_@t.Id" value="@t.Id"
+                                       class="template-radio"
+                                       @(Model.TemplateId == t.Id ? "checked" : "") />
+                                <label for="tpl_@t.Id" class="template-card-label">
+                                    <div class="template-card-diff @diffClass">@diffLabel</div>
+                                    <div class="template-card-name">@t.Name</div>
+                                    <div class="template-card-lure">@t.LureType</div>
+                                    <div class="template-card-subject" title="@t.SubjectTemplate">
+                                        @t.SubjectTemplate
+                                    </div>
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <p style="font-size:0.78rem;color:var(--muted);margin:0.5rem 0 0;">
+                        Difficulty reflects how convincing the lure is — start with Easy for first-time training.
+                    </p>
+                }
+            </div>
+        </div>
+
+        <!-- Participant selector -->
+        <div class="dash-section" style="margin-bottom:1.25rem;">
+            <div class="dash-section-header">
+                <h2 class="dash-section-title">Select recipients</h2>
+            </div>
+            <div class="dash-section-body">
+                @if (!Model.Participants.Any())
+                {
+                    <p style="color:var(--muted);font-size:0.9rem;margin:0 0 0.75rem;">
+                        No family members yet.
+                        <a asp-page="/Family/Index" style="color:var(--primary);">Add someone first</a>.
+                    </p>
+                }
+                else
+                {
+                    <div class="participant-list">
+                        @foreach (var p in Model.Participants)
+                        {
+                            var consentBadge = p.ConsentStatus switch
+                            {
+                                ConsentStatus.Confirmed => "<span class=\"badge badge-sent\" style=\"font-size:0.7rem;\">Confirmed</span>",
+                                ConsentStatus.OptedOut  => "<span class=\"badge badge-cancelled\" style=\"font-size:0.7rem;\">Opted out</span>",
+                                _                       => "<span class=\"badge badge-draft\" style=\"font-size:0.7rem;\">Pending</span>",
+                            };
+                            <label class="participant-check-label">
+                                <input type="checkbox" name="SelectedParticipants" value="@p.Id"
+                                       @(Model.SelectedParticipants.Contains(p.Id) ? "checked" : "") />
+                                <span class="participant-check-name">@p.Name</span>
+                                @Html.Raw(consentBadge)
+                                <span class="participant-check-email">@p.Email</span>
+                            </label>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+            <a asp-page="/Campaigns/Index" class="btn-action btn-action-outline">Cancel</a>
+            <button type="submit" class="btn-action btn-action-primary">Save as draft</button>
+        </div>
+
+    </form>
+</div>
