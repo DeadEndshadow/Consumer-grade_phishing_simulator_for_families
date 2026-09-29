@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\NCXM\\\\SourceCode\\\\Consumer-grade_phishing_simulator_for_families\\\\src\\\\Pages\" -Recurse -File)",
-      "Bash(Select-Object FullName)",
-      "PowerShell(winget search --id PostgreSQL.PostgreSQL --exact 2>$null)"
-    ]
-  }
-}
